@@ -11,6 +11,15 @@ public:
        this->data = data;
        this->next = NULL;
     }
+
+    ~Node() {
+       int value = this->data;
+       if(this->next != NULL) {
+        delete next;
+        this->next = NULL;
+       }
+       cout<<"Memory is free"<<endl;
+    }
 };
 
 void insertAtHead(Node* &head, int d) {
@@ -56,6 +65,28 @@ void insertAtPosition(Node* &head, Node* &tail, int d, int pos) {
 // deleting node according to position
 void deleteNode(Node* &head, int position) {
      // assuming the given position within the range
+     // deleting first node
+     if(position == 1) {
+        Node* temp = head;
+        head = head->next;
+        temp->next = NULL;
+        delete temp;
+     } else {
+        // deleting any or last node
+        Node* curr = head;
+        Node* prev = NULL;
+        int cnt = 1;
+
+        while(cnt < position) {
+            prev = curr;
+            curr = curr->next;
+            cnt++;
+        }
+        
+        prev->next = curr->next;
+        curr->next = NULL;
+        delete curr;
+     }
      
 }
 
@@ -81,6 +112,10 @@ int main()
     insertAtPosition(head, tail, 13, 4);
     insertAtPosition(head, tail, 14, 5);
     insertAtPosition(head, tail, 8, 1);
+    // deleteNode(head, 1);
+    // deleteNode(head, 3);
+    // deleteNode(head, 5);
+    // deleteNode(head, 6);
     PrintLL(head);
 
     return 0;
